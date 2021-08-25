@@ -7,7 +7,7 @@ const typeDefs = gql`
 
   type Mutation {
     authUser(fields: AuthInput!): User!
-    signUp(fields: AuthInput!): User!
+    signUp(fields: AuthInput): User!
   }
 
   type User {
