@@ -1,8 +1,16 @@
 const express = require("express");
 const { ApolloServer } = require("apollo-server-express");
 
+const typeDefs = require("./graphql/schema");
+const { Query } = require("./graphql/resolvers/query");
+
 const app = express();
-const server = new ApolloServer({});
+const server = new ApolloServer({
+  typeDefs,
+  resolvers: {
+    Query,
+  },
+});
 
 server.applyMiddleware({ app });
 

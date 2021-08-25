@@ -13,7 +13,7 @@
   "author": "Bhat Shaqran",
   "license": "MIT",
   "dependencies": {
-    "apollo-server-express": "^3.2.0",
+    "apollo-server-express": "^2.25.2",
     "bcrypt": "^5.0.1",
     "concurrently": "^6.2.1",
     "dotenv": "^10.0.0",
