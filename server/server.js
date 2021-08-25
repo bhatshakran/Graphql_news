@@ -6,6 +6,7 @@ const connectDB = require("./config/connect");
 const typeDefs = require("./graphql/schema");
 
 const { Query } = require("./graphql/resolvers/query");
+const { Mutation } = require("./graphql/resolvers/mutation");
 
 // Load env vars
 dotenv.config({ path: path.resolve(__dirname, "./config/config.env") });
