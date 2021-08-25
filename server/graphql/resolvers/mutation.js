@@ -3,6 +3,36 @@ const { AuthenticationError } = require("apollo-server-express");
 
 module.exports = {
   Mutation: {
+    authUser: async (parent, args, context, info) => {
+      try {
+        const user = await User.findOne({ email: args.fields.email });
+        // Check if the user exists in the database
+        if (!user) {
+          throw new AuthenticationError("User does not exist!");
+        }
+
+        // Compare password
+        const passwordCheck = await user.matchPassword(args.fields.password);
+
+        // Throw error if password doesn't match
+        if (!passwordCheck) {
+          throw new AuthenticationError("Wrong Password!");
+        }
+
+        const token = await user.getSignedJwtToken();
+        if (!token) {
+          throw new AuthenticationError("Couldnt get the token, try again!");
+        }
+
+        return {
+          _id: user._id,
+          email: user.email,
+          token: token,
+        };
+      } catch (err) {
+        throw err;
+      }
+    },
     signUp: async (parent, args, context, info) => {
       try {
         const user = await User.create({
