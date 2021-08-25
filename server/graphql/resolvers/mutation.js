@@ -1,4 +1,5 @@
 const User = require("../../models/User");
+const { AuthenticationError } = require("apollo-server-express");
 
 module.exports = {
   Mutation: {
@@ -9,10 +10,19 @@ module.exports = {
           password: args.fields.password,
         });
 
-        const result = await user.save();
+        const token = user.getSignedJwtToken();
 
-        return { ...result._doc };
+        if (!token) {
+          throw new AuthenticationError("Couldnt get token, try again");
+        } else {
+          const result = await user.save();
+
+          return { ...result._doc };
+        }
       } catch (err) {
+        if (err.code === 11000) {
+          throw new AuthenticationError("Duplicate Entry, user already exits!");
+        }
         throw err;
       }
     },

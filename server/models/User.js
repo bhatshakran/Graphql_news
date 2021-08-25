@@ -41,4 +41,14 @@ userSchema.pre("save", async function (next) {
   }
 });
 
+// Sign JWT and return
+userSchema.methods.getSignedJwtToken = function () {
+  const token = jwt.sign({ id: this._id }, process.env.JWT_SECRET, {
+    expiresIn: process.env.JWT_EXPIRE,
+  });
+
+  this.token = token;
+  return token;
+};
+
 module.exports = mongoose.model("User", userSchema);
