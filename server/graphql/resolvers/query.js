@@ -3,6 +3,7 @@ const User = require("../../models/User");
 const authorize = require("../../middlewares/Authorize");
 const Category = require("../../models/Category");
 const Post = require("../../models/Post");
+const sortingHelper = require("../../middlewares/sorting");
 
 module.exports = {
   Query: {
@@ -40,6 +41,21 @@ module.exports = {
         const post = await Post.findById(args.id);
 
         return post;
+      } catch (err) {
+        throw err;
+      }
+    },
+    getPosts: async (parent, args, context, info) => {
+      try {
+        let queryByArgs = {};
+        let sortArgs = sortingHelper(args.sort);
+
+        const posts = await Post.find(queryByArgs)
+          .sort([[sortArgs.sortBy, sortArgs.order]])
+          .skip(sortArgs.skip)
+          .limit(sortArgs.limit);
+
+        return posts;
       } catch (err) {
         throw err;
       }

@@ -5,6 +5,7 @@ const typeDefs = gql`
     getUser(id: ID!): User!
     getCategories(catId: ID): [Category]!
     getPost(id: ID!): Post!
+    getPosts(sort: SortInput, queryBy: QueryByString): [Post!]!
   }
 
   type Mutation {
@@ -62,6 +63,18 @@ const typeDefs = gql`
   input AuthInput {
     email: String!
     password: String!
+  }
+
+  input SortInput {
+    sortBy: String
+    order: String
+    limit: Int
+    skip: Int
+  }
+
+  input QueryByString {
+    key: String
+    value: String
   }
 `;
 
