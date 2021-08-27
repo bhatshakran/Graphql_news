@@ -1,5 +1,7 @@
 const User = require("../../models/User");
+const authorize = require("../../middlewares/Authorize");
 const { AuthenticationError } = require("apollo-server-express");
+const userOwnership = require("../../middlewares/userOwnership");
 
 module.exports = {
   Mutation: {
@@ -59,6 +61,38 @@ module.exports = {
     updateUserProfile: async (parent, args, context, info) => {
       try {
         const req = authorize(context.req);
+
+        // Check ownership of the user
+        if (!userOwnership(req, args.id)) {
+          throw new AuthenticationError("You dont own this user");
+        }
+
+        if (args.name.length < 2) {
+          throw new AuthenticationError(
+            "Name cannot be empty or less than 2 characters!"
+          );
+        }
+
+        if (args.lastname.length < 2) {
+          throw new AuthenticationError(
+            "Lastname cannot be empty or less than 3 characters!"
+          );
+        }
+
+        // update the user
+        const user = await User.findByIdAndUpdate(
+          args.id,
+          {
+            name: args.name,
+            lastname: args.lastname,
+          },
+          {
+            new: true,
+            runValidators: true,
+          }
+        );
+
+        return user;
       } catch (err) {
         throw err;
       }
