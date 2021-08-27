@@ -5,7 +5,7 @@ const userOwnership = require("../../middlewares/userOwnership");
 
 module.exports = {
   Mutation: {
-    authUser: async (parent, args, context, info) => {
+    loginUser: async (parent, args, context, info) => {
       try {
         const user = await User.findOne({ email: args.fields.email });
         // Check if the user exists in the database
@@ -91,6 +91,47 @@ module.exports = {
             runValidators: true,
           }
         );
+
+        return user;
+      } catch (err) {
+        throw err;
+      }
+    },
+    updateUserEmailPass: async (parent, args, context, info) => {
+      try {
+        const req = authorize(context.req);
+
+        // Check ownership of the user
+        if (!userOwnership(req, args.id)) {
+          throw new AuthenticationError("You dont own this user");
+        }
+
+        // Validate fields
+        const re =
+          /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+        if (re.test(String(args.email).toLowerCase()) === false) {
+          throw new AuthenticationError(
+            "Email is not valid! Check your email."
+          );
+        }
+
+        if (args.password.length < 5) {
+          throw new AuthenticationError(
+            "Password cannot be empty or less than 5 characters!"
+          );
+        }
+
+        // Update user
+        const user = await User.findById(args.id);
+
+        user.email = args.email;
+        user.password = args.password;
+
+        const token = await user.getSignedJwtToken();
+        if (!token) {
+          throw new AuthenticationError("Couldnt get the token, try again!");
+        }
+        await user.save();
 
         return user;
       } catch (err) {
