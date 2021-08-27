@@ -24,7 +24,11 @@ module.exports = {
     },
     categories: async (parent, args, context, info) => {
       try {
-        const categories = await Category.find({});
+        let query = {};
+        if (args.catId) {
+          query["_id"] = args.catId;
+        }
+        const categories = await Category.find(query);
         return categories;
       } catch (err) {
         throw err;
