@@ -3,6 +3,7 @@ const { gql } = require("apollo-server-express");
 const typeDefs = gql`
   type Query {
     getUser(id: ID!): User!
+    categories(catId: ID): [Category]!
   }
 
   type Mutation {

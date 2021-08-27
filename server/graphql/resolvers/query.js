@@ -1,6 +1,7 @@
 const { AuthenticationError } = require("apollo-server-express");
 const User = require("../../models/User");
 const authorize = require("../../middlewares/Authorize");
+const Category = require("../../models/Category");
 
 module.exports = {
   Query: {
@@ -17,6 +18,14 @@ module.exports = {
         }
 
         return user;
+      } catch (err) {
+        throw err;
+      }
+    },
+    categories: async (parent, args, context, info) => {
+      try {
+        const categories = await Category.find({});
+        return categories;
       } catch (err) {
         throw err;
       }
