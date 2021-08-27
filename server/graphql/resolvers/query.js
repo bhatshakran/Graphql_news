@@ -11,7 +11,6 @@ module.exports = {
         if (!user) {
           throw new AuthenticationError("User could not be found!");
         }
-        console.log(req._id);
 
         if (req._id.toString() !== user._id.toString()) {
           throw new AuthenticationError("You dont own this user");

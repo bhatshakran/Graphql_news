@@ -56,5 +56,12 @@ module.exports = {
         throw err;
       }
     },
+    updateUserProfile: async (parent, args, context, info) => {
+      try {
+        const req = authorize(context.req);
+      } catch (err) {
+        throw err;
+      }
+    },
   },
 };
