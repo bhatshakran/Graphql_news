@@ -3,7 +3,14 @@ const Category = require("../../models/Category");
 
 module.exports = {
   User: {
-    // post: async (parent, args, context, info) => {},
+    posts: async (parent, args, context, info) => {
+      try {
+        const posts = await Post.find({ author: parent._id });
+        return posts;
+      } catch (err) {
+        throw err;
+      }
+    },
     categories: async (parent, args, context, info) => {
       try {
         const categories = await Category.find({ author: parent._id });
