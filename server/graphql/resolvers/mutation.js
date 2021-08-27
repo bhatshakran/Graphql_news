@@ -160,9 +160,12 @@ module.exports = {
           content: args.fields.content,
           author: req._id,
           status: args.fields.status,
+          category: args.fields.category,
         });
 
         await post.save();
+
+        
         return post;
       } catch (err) {
         throw err;

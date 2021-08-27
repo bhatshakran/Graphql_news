@@ -23,6 +23,7 @@ const typeDefs = gql`
     updated_at: String!
     author: User!
     status: PostStatus
+    category: ID
   }
 
   type User {
@@ -53,6 +54,7 @@ const typeDefs = gql`
     excerpt: String
     content: String
     status: PostStatus
+    category: ID
   }
 
   input AuthInput {
