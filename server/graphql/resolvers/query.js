@@ -2,6 +2,7 @@ const { AuthenticationError } = require("apollo-server-express");
 const User = require("../../models/User");
 const authorize = require("../../middlewares/Authorize");
 const Category = require("../../models/Category");
+const Post = require("../../models/Post");
 
 module.exports = {
   Query: {
@@ -22,7 +23,7 @@ module.exports = {
         throw err;
       }
     },
-    categories: async (parent, args, context, info) => {
+    getCategories: async (parent, args, context, info) => {
       try {
         let query = {};
         if (args.catId) {
@@ -30,6 +31,15 @@ module.exports = {
         }
         const categories = await Category.find(query);
         return categories;
+      } catch (err) {
+        throw err;
+      }
+    },
+    getPost: async (parent, args, context, info) => {
+      try {
+        const post = await Post.findById(args.id);
+
+        return post;
       } catch (err) {
         throw err;
       }
