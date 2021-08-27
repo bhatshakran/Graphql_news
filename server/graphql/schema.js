@@ -34,8 +34,8 @@ const typeDefs = gql`
   }
 
   enum PostStatus {
-    DRAFT
     PUBLIC
+    DRAFT
   }
 
   input PostInput {

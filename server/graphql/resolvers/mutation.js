@@ -2,6 +2,7 @@ const User = require("../../models/User");
 const authorize = require("../../middlewares/Authorize");
 const { AuthenticationError } = require("apollo-server-express");
 const userOwnership = require("../../middlewares/userOwnership");
+const Post = require("../../models/Post");
 
 module.exports = {
   Mutation: {
@@ -134,6 +135,34 @@ module.exports = {
         await user.save();
 
         return user;
+      } catch (err) {
+        throw err;
+      }
+    },
+    createPost: async (parent, args, context, info) => {
+      try {
+        const req = authorize(context.req);
+
+        // Validate fields
+
+        for (let key in args.fields) {
+          if (key.length < 2) {
+            throw new AuthenticationError(
+              `${key} cannot be empty or less than 2 characters!`
+            );
+          }
+        }
+
+        const post = await Post.create({
+          title: args.fields.title,
+          excerpt: args.fields.excerpt,
+          content: args.fields.content,
+          author: req._id,
+          status: args.fields.status,
+        });
+
+        await post.save();
+        return post;
       } catch (err) {
         throw err;
       }

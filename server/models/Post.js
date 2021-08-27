@@ -26,7 +26,7 @@ const postSchema = new Schema(
     status: {
       type: String,
       enum: ["DRAFT", "PUBLIC"],
-      required: true,
+      default: "DRAFT",
     },
   },
   {
