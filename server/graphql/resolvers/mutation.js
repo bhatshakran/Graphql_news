@@ -3,6 +3,7 @@ const authorize = require("../../middlewares/Authorize");
 const { AuthenticationError } = require("apollo-server-express");
 const userOwnership = require("../../middlewares/userOwnership");
 const Post = require("../../models/Post");
+const Category = require("../../models/Category");
 
 module.exports = {
   Mutation: {
@@ -163,6 +164,22 @@ module.exports = {
 
         await post.save();
         return post;
+      } catch (err) {
+        throw err;
+      }
+    },
+    createCategory: async (parent, args, context, info) => {
+      try {
+        const req = authorize(context.req);
+
+        const category = await Category.create({
+          name: args.name,
+          author: req._id,
+        });
+
+        await category.save();
+
+        return category;
       } catch (err) {
         throw err;
       }
