@@ -21,7 +21,7 @@ const postSchema = new Schema(
     author: {
       type: Schema.Types.ObjectId,
       ref: "User",
-      default: "DRAFT",
+      required: true,
     },
     status: {
       type: String,
