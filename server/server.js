@@ -7,6 +7,7 @@ const typeDefs = require("./graphql/schema");
 
 const { Query } = require("./graphql/resolvers/query");
 const { Mutation } = require("./graphql/resolvers/mutation");
+const { User } = require("./graphql/resolvers/user");
 
 // Load env vars
 dotenv.config({ path: path.resolve(__dirname, "./config/config.env") });
@@ -20,6 +21,7 @@ const server = new ApolloServer({
   resolvers: {
     Query,
     Mutation,
+    User,
   },
   context: ({ req }) => {
     req.headers.authorization =

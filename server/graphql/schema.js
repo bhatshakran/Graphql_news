@@ -32,6 +32,8 @@ const typeDefs = gql`
     name: String
     lastname: String
     token: String
+    posts: [Post!]!
+    categories: [Category!]!
   }
 
   type Category {
