@@ -50,6 +50,11 @@ module.exports = {
         let queryByArgs = {};
         let sortArgs = sortingHelper(args.sort);
 
+
+        if (args.queryBy) {
+          queryByArgs[args.queryBy.key] = args.queryBy.value;
+        }
+
         const posts = await Post.find(queryByArgs)
           .sort([[sortArgs.sortBy, sortArgs.order]])
           .skip(sortArgs.skip)
