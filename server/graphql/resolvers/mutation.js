@@ -224,7 +224,11 @@ module.exports = {
     updateCategory: async (parent, { catId, name }, context, info) => {
       try {
         const req = authorize(context.req);
-        const category = await Category.findByIdAndUpdate(
+
+        let category = await Category.findById(catId);
+        if (!userOwnership(req, category.author))
+          throw new AuthenticationError("Unauthorized, sorry");
+        category = await Category.findByIdAndUpdate(
           catId,
           {
             name,
@@ -233,6 +237,22 @@ module.exports = {
         );
 
         return category;
+      } catch (err) {
+        throw err;
+      }
+    },
+    deleteCategory: async (parent, { catId }, context, info) => {
+      try {
+        const req = authorize(context.req);
+
+        let category = await Category.findById(catId);
+        if (!userOwnership(req, category.author))
+        throw new AuthenticationError("Unauthorized, sorry");
+        category = await Category.findByIdAndDelete(catId);
+
+
+        return 'Category removed !'
+
       } catch (err) {
         throw err;
       }
