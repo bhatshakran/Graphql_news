@@ -1,11 +1,16 @@
 const Post = require("../../models/Post");
 const Category = require("../../models/Category");
+const sortingHelper = require("../../middlewares/sorting");
 
 module.exports = {
   User: {
-    posts: async (parent, args, context, info) => {
+    posts: async (parent, { sort }, context, info) => {
       try {
-        const posts = await Post.find({ author: parent._id });
+        let sortArgs = sortingHelper(sort);
+        const posts = await Post.find({ author: parent._id })
+          .sort([[sortArgs.sortBy, sortArgs.order]])
+          .skip(sortArgs.skip)
+          .limit(sortArgs.limit);
         return posts;
       } catch (err) {
         throw err;
