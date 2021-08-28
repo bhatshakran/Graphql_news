@@ -207,5 +207,19 @@ module.exports = {
         throw err;
       }
     },
+    deletePost: async (parent, { id }, context, info) => {
+      try {
+        const req = authorize(context.req);
+        const post = await Post.findById(id);
+
+        if (!userOwnership(req, post.author))
+          throw new AuthenticationError("Unauthorized, sorry");
+        await Post.findByIdAndDelete(id);
+
+        return "Post deleted!";
+      } catch (err) {
+        throw err;
+      }
+    },
   },
 };
