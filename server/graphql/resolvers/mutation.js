@@ -165,7 +165,6 @@ module.exports = {
 
         await post.save();
 
-        
         return post;
       } catch (err) {
         throw err;
@@ -183,6 +182,27 @@ module.exports = {
         await category.save();
 
         return category;
+      } catch (err) {
+        throw err;
+      }
+    },
+    updatePost: async (parent, { fields, postId }, context, info) => {
+      try {
+        const req = authorize(context.req);
+        const post = await Post.findById(postId);
+
+        if (!userOwnership(req, post.author))
+          throw new AuthenticationError("Unauthorized, sorry");
+
+        for (key in fields) {
+          if (post[key] !== fields[key]) {
+            post[key] = fields[key];
+          }
+        }
+
+        await post.save();
+
+        return post;
       } catch (err) {
         throw err;
       }

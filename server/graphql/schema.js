@@ -14,6 +14,7 @@ const typeDefs = gql`
     loginUser(fields: AuthInput!): User!
     signUp(fields: AuthInput): User!
     createPost(fields: PostInput!): Post!
+    updatePost(fields: PostInput!, postId: ID!): Post!
     createCategory(name: String!): Category!
   }
 
