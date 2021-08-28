@@ -221,5 +221,21 @@ module.exports = {
         throw err;
       }
     },
+    updateCategory: async (parent, { catId, name }, context, info) => {
+      try {
+        const req = authorize(context.req);
+        const category = await Category.findByIdAndUpdate(
+          catId,
+          {
+            name,
+          },
+          { new: true }
+        );
+
+        return category;
+      } catch (err) {
+        throw err;
+      }
+    },
   },
 };

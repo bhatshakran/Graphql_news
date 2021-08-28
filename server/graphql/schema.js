@@ -17,6 +17,7 @@ const typeDefs = gql`
     updatePost(fields: PostInput!, postId: ID!): Post!
     deletePost(id: ID!): String!
     createCategory(name: String!): Category!
+    updateCategory(catId: ID!, name: String!): Category!
   }
 
   type Post {
