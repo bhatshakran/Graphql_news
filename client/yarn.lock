@@ -65,6 +65,16 @@
   "resolved" "https://registry.npmjs.org/@popperjs/core/-/core-2.9.3.tgz"
   "version" "2.9.3"
 
+"@reduxjs/toolkit@^1.6.1":
+  "integrity" "sha512-pa3nqclCJaZPAyBhruQtiRwtTjottRrVJqziVZcWzI73i6L3miLTtUyWfauwv08HWtiXLx1xGyGt+yLFfW/d0A=="
+  "resolved" "https://registry.npmjs.org/@reduxjs/toolkit/-/toolkit-1.6.1.tgz"
+  "version" "1.6.1"
+  dependencies:
+    "immer" "^9.0.1"
+    "redux" "^4.1.0"
+    "redux-thunk" "^2.3.0"
+    "reselect" "^4.0.0"
+
 "@restart/context@^2.1.4":
   "integrity" "sha512-INJYZQJP7g+IoDUh/475NlGiTeMfwTXUEr3tmRneckHIxNolGOW9CTq83S8cxq0CgJwwcMzMJFchxvlwe7Rk8Q=="
   "resolved" "https://registry.npmjs.org/@restart/context/-/context-2.1.4.tgz"
@@ -1978,7 +1988,7 @@
   optionalDependencies:
     "fsevents" "^1.2.7"
 
-"chokidar@^3.4.0":
+"chokidar@^2.1.8", "chokidar@^3.4.0":
   "integrity" "sha512-ekGhOnNVPgT77r4K/U3GDhu+FQ2S8TnK/s2KbIGXi0SZWuwkZ2QNyfWdZW+TVfn84DpEP7rLeCt2UI6bJ8GwbQ=="
   "resolved" "https://registry.npmjs.org/chokidar/-/chokidar-3.5.2.tgz"
   "version" "3.5.2"
@@ -1995,6 +2005,9 @@
 
 "chokidar2@file:./chokidar2":
   "resolved" "file:node_modules/watchpack/chokidar2"
+  "version" "2.0.0"
+  dependencies:
+    "chokidar" "^2.1.8"
 
 "ci-info@^1.5.0":
   "integrity" "sha512-vsGdkwSCDpWmP80ncATX7iea5DWQemg1UgCW5J8tqjU3lYw4FBYuj89J0CTVomA7BEfvSZd84GmHko+MxFQU2A=="
@@ -4329,6 +4342,11 @@
   "integrity" "sha512-Pgs951kaMm5GXP7MOvxERINe3gsaVjUWFm+UZPSq9xYriQAksyhg0csnS0KXSNRD5NmNdapXEpjxG49+AKh/ug=="
   "resolved" "https://registry.npmjs.org/ignore/-/ignore-3.3.10.tgz"
   "version" "3.3.10"
+
+"immer@^9.0.1":
+  "integrity" "sha512-2WuIehr2y4lmYz9gaQzetPR2ECniCifk4ORaQbU3g5EalLt+0IVTosEPJ5BoYl/75ky2mivzdRzV8wWgQGOSYQ=="
+  "resolved" "https://registry.npmjs.org/immer/-/immer-9.0.5.tgz"
+  "version" "9.0.5"
 
 "import-lazy@^2.1.0":
   "integrity" "sha1-BWmOPUXIjo1+nZLLBYTnfwlvPkM="
@@ -7210,7 +7228,7 @@
     "uncontrollable" "^7.2.1"
     "warning" "^4.0.3"
 
-"react-redux@^7.2.4":
+"react-redux@^7.2.1", "react-redux@^7.2.4":
   "integrity" "sha512-hOQ5eOSkEJEXdpIKbnRyl04LhaWabkDPV+Ix97wqQX3T3d2NQ8DUblNXXtNMavc7DpswyQM6xfaN4HQDKNY2JA=="
   "resolved" "https://registry.npmjs.org/react-redux/-/react-redux-7.2.4.tgz"
   "version" "7.2.4"
@@ -7229,7 +7247,7 @@
   dependencies:
     "prop-types" "^15.5.10"
 
-"react-router-dom@>=4.0.0":
+"react-router-dom@^5.2.1", "react-router-dom@>=4.0.0":
   "integrity" "sha512-xhFFkBGVcIVPbWM2KEYzED+nuHQPmulVa7sqIs3ESxzYd1pYg8N8rxPnQ4T2o1zu/2QeDUWcaqST131SO1LR3w=="
   "resolved" "https://registry.npmjs.org/react-router-dom/-/react-router-dom-5.2.1.tgz"
   "version" "5.2.1"
@@ -7242,7 +7260,7 @@
     "tiny-invariant" "^1.0.2"
     "tiny-warning" "^1.0.0"
 
-"react-router@^5.2.1", "react-router@5.2.1":
+"react-router@5.2.1":
   "integrity" "sha512-lIboRiOtDLFdg1VTemMwud9vRVuOCZmUIT/7lUoZiSpPODiiH1UQlfXy+vPLC/7IWdFYnhRwAyNqA/+I7wnvKQ=="
   "resolved" "https://registry.npmjs.org/react-router/-/react-router-5.2.1.tgz"
   "version" "5.2.1"
@@ -7321,7 +7339,7 @@
     "loose-envify" "^1.4.0"
     "prop-types" "^15.6.2"
 
-"react@*", "react@^0.14.0 || ^15.0.0 || ^16.0.0 || ^17.0.0", "react@^16.8.3 || ^17", "react@^17.0.2", "react@>=0.14.0", "react@>=15", "react@>=15.0.0", "react@>=16", "react@>=16.3.0", "react@>=16.3.2", "react@>=16.6.0", "react@>=16.8.0", "react@17.0.2":
+"react@*", "react@^0.14.0 || ^15.0.0 || ^16.0.0 || ^17.0.0", "react@^16.14.0 || ^17.0.0", "react@^16.8.3 || ^17", "react@^17.0.2", "react@>=0.14.0", "react@>=15", "react@>=15.0.0", "react@>=16", "react@>=16.3.0", "react@>=16.3.2", "react@>=16.6.0", "react@>=16.8.0", "react@17.0.2":
   "integrity" "sha512-gnhPt75i/dq/z3/6q/0asP78D0u592D5L1pd7M8P+dck6Fu/jJeL6iVVK23fptSUZj8Vjf++7wXA8UNclGQcbA=="
   "resolved" "https://registry.npmjs.org/react/-/react-17.0.2.tgz"
   "version" "17.0.2"
@@ -7440,7 +7458,12 @@
   dependencies:
     "balanced-match" "^1.0.0"
 
-"redux@^4.0.0":
+"redux-thunk@^2.3.0":
+  "integrity" "sha512-km6dclyFnmcvxhAcrQV2AkZmPQjzPDjgVlQtR0EQjxZPyJ0BnMf3in1ryuR8A2qU0HldVRfxYXbFSKlI3N7Slw=="
+  "resolved" "https://registry.npmjs.org/redux-thunk/-/redux-thunk-2.3.0.tgz"
+  "version" "2.3.0"
+
+"redux@^4.0.0", "redux@^4.1.0":
   "integrity" "sha512-hZQZdDEM25UY2P493kPYuKqviVwZ58lEmGQNeQ+gXa+U0gYPUBf7NKYazbe3m+bs/DzM/ahN12DbF+NG8i0CWw=="
   "resolved" "https://registry.npmjs.org/redux/-/redux-4.1.1.tgz"
   "version" "4.1.1"
@@ -7621,6 +7644,11 @@
   "integrity" "sha1-kl0mAdOaxIXgkc8NpcbmlNw9yv8="
   "resolved" "https://registry.npmjs.org/requires-port/-/requires-port-1.0.0.tgz"
   "version" "1.0.0"
+
+"reselect@^4.0.0":
+  "integrity" "sha512-qUgANli03jjAyGlnbYVAV5vvnOmJnODyABz51RdBN7M4WaVu8mecZWgyQNkG8Yqe3KRGRt0l4K4B3XVEULC4CA=="
+  "resolved" "https://registry.npmjs.org/reselect/-/reselect-4.0.0.tgz"
+  "version" "4.0.0"
 
 "resolve-cwd@^2.0.0":
   "integrity" "sha1-AKn3OHVW4nA46uIyyqNypqWbZlo="
