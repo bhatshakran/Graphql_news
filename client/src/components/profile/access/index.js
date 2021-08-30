@@ -11,6 +11,14 @@ const UserAccess = () => {
       email: "",
       password: "",
     },
+    validationSchema: Yup.object({
+      email: Yup.string()
+        .email("Invalid Email")
+        .required("Sorry the email is required!"),
+      password: Yup.string()
+        .min(5, "Must be more than 5 characters!")
+        .required("Sorry the password is required!"),
+    }),
     onSubmit: (values) => {
       console.log(values);
     },
@@ -38,6 +46,9 @@ const UserAccess = () => {
             onBlur={formik.handleBlur}
             value={formik.values.email}
           />
+          {formik.touched.email && formik.errors.email ? (
+            <Alert variant="danger">{formik.errors.email}</Alert>
+          ) : null}
         </Form.Group>
         <Form.Group>
           <Form.Label>Password</Form.Label>
@@ -50,6 +61,9 @@ const UserAccess = () => {
             onBlur={formik.handleBlur}
             value={formik.values.password}
           />
+          {formik.touched.password && formik.errors.password ? (
+            <Alert variant="danger">{formik.errors.password}</Alert>
+          ) : null}
         </Form.Group>
         {type ? (
           <Button variant="primary" type="submit" className="mt-4">
