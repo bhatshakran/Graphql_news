@@ -1,7 +1,7 @@
 import axios from "axios";
 
-export const axiosConfig = axios.create({
-  baseURL: "",
+export default axios.create({
+  baseURL: "/graphql",
   method: "POST",
   headers: {
     "Content-Type": "application/json",

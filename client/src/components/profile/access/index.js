@@ -2,8 +2,11 @@ import React, { useState } from "react";
 import { Form, Button, Row, Col, Alert } from "react-bootstrap";
 import { useFormik } from "formik";
 import * as Yup from "yup";
+import { useDispatch } from "react-redux";
+import { registerUser } from "../../../redux/features/auth/register";
 
 const UserAccess = () => {
+  const dispatch = useDispatch();
   const [type, setType] = useState(true);
 
   const formik = useFormik({
@@ -30,11 +33,12 @@ const UserAccess = () => {
   };
 
   // On form submit handler
-  const onSubmitHandler = () => {
+  const onSubmitHandler = (values) => {
     if (type) {
       // Sign In user
     } else {
       // Register user
+      dispatch(registerUser(values));
     }
   };
 

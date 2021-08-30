@@ -3,7 +3,23 @@ import axios from "../../../axios/config";
 
 export const registerUser = createAsyncThunk("/register", async (userData) => {
   try {
-    console.log(userData);
+    const { data } = await axios({
+      data: {
+        query: `mutation {
+          signUp(
+            fields:{
+              email:"${userData.email}"
+              password:"${userData.password}"
+            }
+          ){
+            _id
+            email
+            token
+          }
+        }`,
+      },
+    });
+    console.log(data);
   } catch (err) {
     console.log(err);
   }
@@ -23,8 +39,8 @@ export const registerSlice = createSlice({
     [registerUser.fulfilled]: (state, action) => {
       state.isAuthenticated = true;
       state.loading = false;
-      state.user = action.payload.values;
-      state.message = action.payload.msg;
+      // state.user = action.payload.values;
+      // state.message = action.payload.msg;
     },
   },
 });
