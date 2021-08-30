@@ -1,12 +1,27 @@
-import React from "react";
+import React, { useState } from "react";
 import { Form, Button, Row, Col, Alert } from "react-bootstrap";
 import { useFormik } from "formik";
 import * as Yup from "yup";
 
 const UserAccess = () => {
+  const [type, setType] = useState(true);
+
+  const formik = useFormik({
+    initialValues: {
+      email: "",
+      password: "",
+    },
+    onSubmit: (values) => {
+      console.log(values);
+    },
+  });
+
+  const switchTypeHandler = () => {
+    setType(!type);
+  };
   return (
     <React.Fragment>
-      <Form>
+      <Form onSubmit={formik.handleSubmit}>
         <Row className="mb-4">
           <Col>
             <h1>Sign in/Register</h1>
@@ -19,9 +34,11 @@ const UserAccess = () => {
             placeholder="Enter your email"
             id="email"
             name="email"
+            onChange={formik.handleChange}
+            onBlur={formik.handleBlur}
+            value={formik.values.email}
           />
         </Form.Group>
-
         <Form.Group>
           <Form.Label>Password</Form.Label>
           <Form.Control
@@ -29,10 +46,27 @@ const UserAccess = () => {
             placeholder="Enter your password"
             id="password"
             name="password"
+            onChange={formik.handleChange}
+            onBlur={formik.handleBlur}
+            value={formik.values.password}
           />
         </Form.Group>
-        <Button variant="primary" type="submit">
-          Sign In
+        {type ? (
+          <Button variant="primary" type="submit" className="mt-4">
+            Sign In
+          </Button>
+        ) : (
+          <Button variant="primary" type="submit" className="mt-4">
+            Register
+          </Button>
+        )}
+
+        <Button
+          variant="secondary"
+          className="mx-2 mt-4"
+          onClick={switchTypeHandler}
+        >
+          Already {type ? "Signed in" : "Registered"} ? click here
         </Button>
       </Form>
     </React.Fragment>
