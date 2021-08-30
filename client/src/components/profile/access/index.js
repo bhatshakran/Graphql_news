@@ -20,13 +20,25 @@ const UserAccess = () => {
         .required("Sorry the password is required!"),
     }),
     onSubmit: (values) => {
-      console.log(values);
+      onSubmitHandler(values);
     },
   });
 
+  // Switch type handler
   const switchTypeHandler = () => {
     setType(!type);
   };
+
+  // On form submit handler
+  const onSubmitHandler = () => {
+    if (type) {
+      // Sign In user
+    } else {
+      // Register user
+    }
+  };
+
+  // Return
   return (
     <React.Fragment>
       <Form onSubmit={formik.handleSubmit}>
@@ -85,6 +97,6 @@ const UserAccess = () => {
       </Form>
     </React.Fragment>
   );
-};
+};;
 
 export default UserAccess;

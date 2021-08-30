@@ -1,5 +1,13 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
-import axios from "axios";
+import axios from "../../../axios/config";
+
+export const registerUser = createAsyncThunk("/register", async (userData) => {
+  try {
+    console.log(userData);
+  } catch (err) {
+    console.log(err);
+  }
+});
 
 export const registerSlice = createSlice({
   name: "auth",
@@ -11,7 +19,14 @@ export const registerSlice = createSlice({
   },
 
   reducers: {},
-  extraReducers: {},
+  extraReducers: {
+    [registerUser.fulfilled]: (state, action) => {
+      state.isAuthenticated = true;
+      state.loading = false;
+      state.user = action.payload.values;
+      state.message = action.payload.msg;
+    },
+  },
 });
 
 export default registerSlice.reducer;
