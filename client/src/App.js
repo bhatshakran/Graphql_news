@@ -5,19 +5,22 @@ import Home from "./components/Home";
 import Header from "./components/Header";
 import UserAccess from "./components/profile/access";
 import { ToastContainer } from "react-toastify";
+import AutoSignIn from "./components/HOC/autoSignIn";
 
 function App() {
   return (
     <div className="App">
       <BrowserRouter>
-        <ToastContainer />
-        <Header />
-        <Container className="mt-4">
-          <Switch>
-            <Route path="/sign_in" component={UserAccess} />
-            <Route path="/" component={Home} />
-          </Switch>
-        </Container>
+        <AutoSignIn>
+          <ToastContainer />
+          <Header />
+          <Container className="mt-4">
+            <Switch>
+              <Route path="/sign_in" component={UserAccess} />
+              <Route path="/" component={Home} />
+            </Switch>
+          </Container>
+        </AutoSignIn>
       </BrowserRouter>
     </div>
   );

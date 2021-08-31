@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { Form, Button, Row, Col, Alert } from "react-bootstrap";
 import { useFormik } from "formik";
 import * as Yup from "yup";
@@ -46,6 +46,13 @@ const UserAccess = () => {
       history.push("/user_area");
     }
   };
+
+  // use effect
+  useEffect(() => {
+    return function cleanup() {
+      // dispatch to clear user from the store
+    };
+  });
 
   // Return
   return (
@@ -106,6 +113,6 @@ const UserAccess = () => {
       </Form>
     </React.Fragment>
   );
-};;
+};
 
 export default UserAccess;
