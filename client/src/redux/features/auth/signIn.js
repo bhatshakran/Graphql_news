@@ -56,7 +56,15 @@ export const loginSlice = createSlice({
     isAuthenticated: false,
     message: "",
   },
-  reducers: {},
+  reducers: {
+    logoutUser: (state) => {
+      localStorage.removeItem("X-AUTH");
+      state.isAuthenticated = false;
+      state.loading = false;
+      state.user = {};
+      state.message = "Logged out successfully";
+    },
+  },
   extraReducers: {
     [loginUser.fulfilled]: (state, action) => {
       console.log("done");
@@ -77,5 +85,7 @@ export const loginSlice = createSlice({
     },
   },
 });
+
+export const { logoutUser } = loginSlice.actions;
 
 export default loginSlice.reducer;
