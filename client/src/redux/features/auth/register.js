@@ -19,7 +19,10 @@ export const registerUser = createAsyncThunk("/register", async (userData) => {
         }`,
       },
     });
-    console.log(data);
+    return {
+      ...(data.data ? data.data.signUp : null),
+      errors: data.errrors,
+    };
   } catch (err) {
     console.log(err);
   }
@@ -39,7 +42,7 @@ export const registerSlice = createSlice({
     [registerUser.fulfilled]: (state, action) => {
       state.isAuthenticated = true;
       state.loading = false;
-      // state.user = action.payload.values;
+      state.user = action.payload;
       // state.message = action.payload.msg;
     },
   },
