@@ -52,7 +52,25 @@ export const updateUserEmailPass = createAsyncThunk(
   "/update",
   async (values) => {
     try {
-      console.log(values);
+      
+      const { email, password, id } = values;
+
+      const { data } = await config({
+        data: {
+          query: `mutation{
+            updateUserEmailPass(
+          email:"${email}"
+          password:"${password}"
+          id:"${id}"
+        ){
+          _id
+          token
+          email
+        }}`,
+        },
+      });
+      return data.data;
+      
     } catch (err) {
       console.log(err);
     }

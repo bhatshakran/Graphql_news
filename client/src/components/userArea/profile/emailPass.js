@@ -27,6 +27,7 @@ const EmailPass = () => {
   });
   //   On submit handler
   const onSubmitHandler = (values) => {
+       values = { ...values, id: user._id };
     dispatch(updateUserEmailPass(values));
   };
 
