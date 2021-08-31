@@ -4,9 +4,11 @@ import { useFormik } from "formik";
 import * as Yup from "yup";
 import { useDispatch } from "react-redux";
 import { registerUser } from "../../../redux/features/auth/register";
+import { useHistory } from "react-router-dom";
 
 const UserAccess = () => {
   const dispatch = useDispatch();
+  const history = useHistory();
   const [type, setType] = useState(true);
 
   const formik = useFormik({
@@ -39,6 +41,7 @@ const UserAccess = () => {
     } else {
       // Register user
       dispatch(registerUser(values));
+      history.push("/user_area");
     }
   };
 

@@ -43,7 +43,8 @@ export const registerSlice = createSlice({
       state.isAuthenticated = true;
       state.loading = false;
       state.user = action.payload;
-      // state.message = action.payload.msg;
+      localStorage.setItem("X-AUTH", state.user.token);
+      state.message = "Registered succesfully!";
     },
   },
 });
