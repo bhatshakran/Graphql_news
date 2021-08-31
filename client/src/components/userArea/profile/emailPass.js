@@ -4,10 +4,12 @@ import * as Yup from "yup";
 import { Form, Button, Alert } from "react-bootstrap";
 import toastHandler from "../../../utils/toasts";
 import { useDispatch, useSelector } from "react-redux";
+import { updateUserEmailPass } from "../../../redux/features/auth/signIn";
 
 const EmailPass = () => {
   const dispatch = useDispatch();
-  const user = useSelector((state) => state.login);
+  const user = useSelector((state) => state.login.user);
+
   const formik = useFormik({
     enableReinitialize: true,
     initialValues: {
@@ -20,9 +22,13 @@ const EmailPass = () => {
       password: Yup.string().min(5, "Must be more than 5 characters!"),
     }),
     onSubmit: (values) => {
-      console.log(values);
+      onSubmitHandler(values);
     },
   });
+  //   On submit handler
+  const onSubmitHandler = (values) => {
+    dispatch(updateUserEmailPass(values));
+  };
 
   return (
     <div className="mt-3">

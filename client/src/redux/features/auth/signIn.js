@@ -48,6 +48,17 @@ export const autoSign = createAsyncThunk("/login", async () => {
   }
 });
 
+export const updateUserEmailPass = createAsyncThunk(
+  "/update",
+  async (values) => {
+    try {
+      console.log(values);
+    } catch (err) {
+      console.log(err);
+    }
+  }
+);
+
 export const loginSlice = createSlice({
   name: "auth",
   initialState: {
