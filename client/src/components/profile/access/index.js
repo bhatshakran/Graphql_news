@@ -40,6 +40,7 @@ const UserAccess = () => {
     if (type) {
       // Sign In user
       dispatch(loginUser(values));
+      history.push("/user_area");
     } else {
       // Register user
       dispatch(registerUser(values));

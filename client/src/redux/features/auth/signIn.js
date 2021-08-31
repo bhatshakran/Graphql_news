@@ -29,7 +29,24 @@ export const loginUser = createAsyncThunk("/login", async (userData) => {
   }
 });
 
-export const autoSign = createAsyncThunk("/login", async (values) => {});
+export const autoSign = createAsyncThunk("/login", async () => {
+  try {
+    const { data } = await config({
+      data: {
+        query: `
+        query{isAuth{_id, email, token}}
+        `,
+      },
+    });
+    if (data.errors) localStorage.removeItem("X-AUTH");
+
+    return {
+      ...(data.data ? data.data.isAuth : null),
+    };
+  } catch (err) {
+    console.log(err);
+  }
+});
 
 export const loginSlice = createSlice({
   name: "auth",
