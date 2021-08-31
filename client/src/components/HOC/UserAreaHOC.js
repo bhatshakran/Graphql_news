@@ -11,10 +11,10 @@ const UserAreaHOC = (props) => {
           <LinkContainer to="/user_area/profile">
             <Nav.Link>Profile</Nav.Link>
           </LinkContainer>
-          <LinkContainer to="/user_area/profile">
+          <LinkContainer to="/user_area/articles">
             <Nav.Link>Articles</Nav.Link>
           </LinkContainer>
-          <LinkContainer to="/user_area/profile">
+          <LinkContainer to="/user_area/create">
             <Nav.Link>Create</Nav.Link>
           </LinkContainer>
         </Nav>
