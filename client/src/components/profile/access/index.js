@@ -5,6 +5,7 @@ import * as Yup from "yup";
 import { useDispatch } from "react-redux";
 import { registerUser } from "../../../redux/features/auth/register";
 import { useHistory } from "react-router-dom";
+import { loginUser } from "../../../redux/features/auth/signIn";
 
 const UserAccess = () => {
   const dispatch = useDispatch();
@@ -38,6 +39,7 @@ const UserAccess = () => {
   const onSubmitHandler = (values) => {
     if (type) {
       // Sign In user
+      dispatch(loginUser(values));
     } else {
       // Register user
       dispatch(registerUser(values));

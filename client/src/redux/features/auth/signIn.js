@@ -2,29 +2,28 @@ import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 import config from "../../../axios/config";
 import toastHandler from "../../../utils/toasts";
 
-export const registerUser = createAsyncThunk("/register", async (userData) => {
+export const loginUser = createAsyncThunk("/login", async (userData) => {
   try {
     const { data } = await config({
       data: {
-        query: `mutation {
-          signUp(
-            fields:{
-              email:"${userData.email}"
-              password:"${userData.password}"
-            }
-          ){
-            _id
-            email
-            token
-          }
-        }`,
+        query: `mutation{
+                loginUser(
+                    fields:{
+                    email:"${userData.email}"
+                    password:"${userData.password}"
+                }){
+                    _id
+                    email
+                    token
+                }
+            }`,
       },
     });
 
-    toastHandler("Welcome", "SUCCESS");
-
+    toastHandler("Logged In!", "SUCCESS");
+    console.log(data);
     return {
-      ...(data.data ? data.data.signUp : null),
+      ...data.data.loginUser,
     };
   } catch (err) {
     console.log(err);
@@ -34,7 +33,7 @@ export const registerUser = createAsyncThunk("/register", async (userData) => {
   }
 });
 
-export const registerSlice = createSlice({
+export const loginSlice = createSlice({
   name: "auth",
   initialState: {
     user: {},
@@ -42,17 +41,17 @@ export const registerSlice = createSlice({
     isAuthenticated: false,
     message: "",
   },
-
   reducers: {},
   extraReducers: {
-    [registerUser.fulfilled]: (state, action) => {
+    [loginUser.fulfilled]: (state, action) => {
+      console.log("done");
       state.isAuthenticated = true;
       state.loading = false;
       state.user = action.payload;
-      state.message = "Registered succesfully!";
+      state.message = "Logged in succesfully!";
       localStorage.setItem("X-AUTH", state.user.token);
     },
   },
 });
 
-export default registerSlice.reducer;
+export default loginSlice.reducer;
