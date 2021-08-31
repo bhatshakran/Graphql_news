@@ -4,11 +4,13 @@ import { Container } from "react-bootstrap";
 import Home from "./components/Home";
 import Header from "./components/Header";
 import UserAccess from "./components/profile/access";
+import { ToastContainer } from "react-toastify";
 
 function App() {
   return (
     <div className="App">
       <BrowserRouter>
+        <ToastContainer />
         <Header />
         <Container className="mt-4">
           <Switch>

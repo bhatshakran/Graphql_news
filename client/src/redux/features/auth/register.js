@@ -1,5 +1,6 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 import axios from "../../../axios/config";
+import toastHandler from "../../../utils/toasts";
 
 export const registerUser = createAsyncThunk("/register", async (userData) => {
   try {
@@ -43,9 +44,15 @@ export const registerSlice = createSlice({
       state.isAuthenticated = true;
       state.loading = false;
       state.user = action.payload;
-      localStorage.setItem("X-AUTH", state.user.token);
       state.message = "Registered succesfully!";
+      localStorage.setItem("X-AUTH", state.user.token);
+      toastHandler("Welcome", "SUCCESS");
     },
+    // [registerUser.rejected]:(state, action) => {
+    //   state.isAuthenticated = false;
+    //   state.loading = false;
+
+    // }
   },
 });
 
