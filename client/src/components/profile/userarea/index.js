@@ -1,7 +1,8 @@
 import React from "react";
+import UserAreaHOC from "../../HOC/UserAreaHOC";
 
 const UserArea = () => {
-  return <div>userarea</div>;
+  return <UserAreaHOC>UserArea</UserAreaHOC>;
 };
 
 export default UserArea;
