@@ -20,6 +20,12 @@ export const loginUser = createAsyncThunk("/login", async (userData) => {
       },
     });
 
+    if (data.errors) {
+      return { errors: data.errors };
+    } else {
+      localStorage.setItem("X-AUTH", data.data.updateUserEmailPass.token);
+    }
+
     return {
       ...data.data.loginUser,
       errors: data.errors,
@@ -52,9 +58,8 @@ export const updateUserEmailPass = createAsyncThunk(
   "/update",
   async (values) => {
     try {
-      
       const { email, password, id } = values;
-
+      console.log(id);
       const { data } = await config({
         data: {
           query: `mutation{
@@ -69,8 +74,13 @@ export const updateUserEmailPass = createAsyncThunk(
         }}`,
         },
       });
-      return data.data;
-      
+      if (data.errors) {
+        return { errors: data.errors };
+      } else {
+        localStorage.setItem("X-AUTH", data.data.updateUserEmailPass.token);
+      }
+
+      return data.data.updateUserEmailPass;
     } catch (err) {
       console.log(err);
     }
@@ -96,7 +106,6 @@ export const loginSlice = createSlice({
   },
   extraReducers: {
     [loginUser.fulfilled]: (state, action) => {
-      console.log("done");
       state.isAuthenticated = true;
       state.loading = false;
       state.user = action.payload;
@@ -111,6 +120,15 @@ export const loginSlice = createSlice({
       ];
 
       toastHandler(errors, "ERROR");
+    },
+    [updateUserEmailPass.fulfilled]: (state, action) => {
+      console.log("done");
+      state.isAuthenticated = true;
+      state.loading = false;
+      state.user = action.payload;
+      state.message = "Update email/password!";
+      localStorage.setItem("X-AUTH", action.payload.token);
+      toastHandler("Update email/password!", "SUCCESS");
     },
   },
 });

@@ -117,17 +117,13 @@ module.exports = {
           );
         }
 
-        if (args.password.length < 5) {
-          throw new AuthenticationError(
-            "Password cannot be empty or less than 5 characters!"
-          );
-        }
-
         // Update user
         const user = await User.findById(args.id);
 
         user.email = args.email;
-        user.password = args.password;
+        if (args.password) {
+          user.password = args.password;
+        }
 
         const token = await user.getSignedJwtToken();
         if (!token) {
