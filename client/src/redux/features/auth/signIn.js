@@ -29,6 +29,8 @@ export const loginUser = createAsyncThunk("/login", async (userData) => {
   }
 });
 
+export const autoSign = createAsyncThunk("/login", async (values) => {});
+
 export const loginSlice = createSlice({
   name: "auth",
   initialState: {

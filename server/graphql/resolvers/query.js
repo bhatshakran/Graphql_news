@@ -24,6 +24,19 @@ module.exports = {
         throw err;
       }
     },
+    isAuth: async (parent, args, context, info) => {
+      try {
+        const req = authorize(context.req, true);
+        if (!req._id) {
+          throw new AuthenticationError("Bad token");
+        }
+        const user = await User.findById(req._id);
+
+        return user;
+      } catch (err) {
+        throw err;
+      }
+    },
     getCategories: async (parent, args, context, info) => {
       try {
         let query = {};
@@ -49,7 +62,6 @@ module.exports = {
       try {
         let queryByArgs = {};
         let sortArgs = sortingHelper(args.sort);
-
 
         if (args.queryBy) {
           queryByArgs[args.queryBy.key] = args.queryBy.value;

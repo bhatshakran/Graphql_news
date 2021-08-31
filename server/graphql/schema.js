@@ -3,6 +3,7 @@ const { gql } = require("apollo-server-express");
 const typeDefs = gql`
   type Query {
     getUser(id: ID!): User!
+    isAuth: User!
     getCategories(catId: ID): [Category]!
     getPost(id: ID!): Post!
     getPosts(sort: SortInput, queryBy: QueryByString): [Post!]!
