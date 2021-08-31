@@ -1,8 +1,14 @@
 import React from "react";
 import UserAreaHOC from "../../HOC/UserAreaHOC";
+import EmailPass from "./emailPass";
 
-const Profile = () => {
-  return <UserAreaHOC>Profile</UserAreaHOC>;
+const Profile = (props) => {
+  return (
+    <UserAreaHOC>
+      <EmailPass {...props} />
+      <hr />
+    </UserAreaHOC>
+  );
 };
 
 export default Profile;
