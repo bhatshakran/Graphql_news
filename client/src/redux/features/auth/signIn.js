@@ -2,40 +2,7 @@ import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 import config from "../../../axios/config";
 import toastHandler from "../../../utils/toasts";
 
-export const loginUser = createAsyncThunk("/login", async (userData) => {
-  try {
-    const { data } = await config({
-      data: {
-        query: `mutation{
-                loginUser(
-                    fields:{
-                    email:"${userData.email}"
-                    password:"${userData.password}"
-                }){
-                    _id
-                    email
-                    token
-                }
-            }`,
-      },
-    });
-
-    if (data.errors) {
-      return { errors: data.errors };
-    } else {
-      localStorage.setItem("X-AUTH", data.data.updateUserEmailPass.token);
-    }
-
-    return {
-      ...data.data.loginUser,
-      errors: data.errors,
-    };
-  } catch (err) {
-    throw err;
-  }
-});
-
-export const autoSign = createAsyncThunk("/login", async () => {
+export const autoSign = createAsyncThunk("/autosignin", async () => {
   try {
     const { data } = await config({
       data: {
@@ -45,7 +12,7 @@ export const autoSign = createAsyncThunk("/login", async () => {
       },
     });
     if (data.errors) localStorage.removeItem("X-AUTH");
-
+    console.log(data);
     return {
       ...(data.data ? data.data.isAuth : null),
     };
@@ -86,6 +53,32 @@ export const updateUserEmailPass = createAsyncThunk(
     }
   }
 );
+export const loginUser = createAsyncThunk("/login", async (userData) => {
+  try {
+    const { data } = await config({
+      data: {
+        query: `mutation{
+                loginUser(
+                    fields:{
+                    email:"${userData.email}"
+                    password:"${userData.password}"
+                }){
+                    _id
+                    email
+                    token
+                }
+            }`,
+      },
+    });
+
+    return {
+      ...data.data.loginUser,
+      errors: data.errors,
+    };
+  } catch (err) {
+    throw err;
+  }
+});
 
 export const loginSlice = createSlice({
   name: "auth",
@@ -114,6 +107,7 @@ export const loginSlice = createSlice({
       toastHandler("Logged In!", "SUCCESS");
     },
     [loginUser.rejected]: (state, action) => {
+      state.isAuthenticated = false;
       const errors = [
         "Sorry something went wrong",
         "Check your email and password!",
@@ -121,14 +115,21 @@ export const loginSlice = createSlice({
 
       toastHandler(errors, "ERROR");
     },
+    [autoSign.fulfilled]: (state, action) => {
+      state.isAuthenticated = true;
+      state.loading = false;
+      state.user = action.payload;
+      state.message = "Logged in succesfully!";
+      localStorage.setItem("X-AUTH", action.payload.token);
+    },
     [updateUserEmailPass.fulfilled]: (state, action) => {
       console.log("done");
       state.isAuthenticated = true;
       state.loading = false;
       state.user = action.payload;
-      state.message = "Update email/password!";
+      state.message = "Updated email/password!";
       localStorage.setItem("X-AUTH", action.payload.token);
-      toastHandler("Update email/password!", "SUCCESS");
+      toastHandler("Updated email/password!", "SUCCESS");
     },
   },
 });
