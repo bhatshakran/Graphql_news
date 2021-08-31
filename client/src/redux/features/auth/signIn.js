@@ -20,16 +20,12 @@ export const loginUser = createAsyncThunk("/login", async (userData) => {
       },
     });
 
-    toastHandler("Logged In!", "SUCCESS");
-    console.log(data);
     return {
       ...data.data.loginUser,
+      errors: data.errors,
     };
   } catch (err) {
-    console.log(err);
-    toastHandler(err, "ERROR");
-
-    return { errors: err };
+    throw err;
   }
 });
 
@@ -49,7 +45,16 @@ export const loginSlice = createSlice({
       state.loading = false;
       state.user = action.payload;
       state.message = "Logged in succesfully!";
-      localStorage.setItem("X-AUTH", state.user.token);
+      localStorage.setItem("X-AUTH", action.payload.token);
+      toastHandler("Logged In!", "SUCCESS");
+    },
+    [loginUser.rejected]: (state, action) => {
+      const errors = [
+        "Sorry something went wrong",
+        "Check your email and password!",
+      ];
+
+      toastHandler(errors, "ERROR");
     },
   },
 });

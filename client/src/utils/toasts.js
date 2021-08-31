@@ -7,8 +7,10 @@ const toastHandler = (value, style) => {
       position: toast.POSITION.BOTTOM_RIGHT,
     });
   } else {
+   
     for (const item of value) {
-      toast(item.message, {
+      console.log(item);
+      toast(item, {
         type: toast.TYPE[style],
         position: toast.POSITION.BOTTOM_RIGHT,
       });
