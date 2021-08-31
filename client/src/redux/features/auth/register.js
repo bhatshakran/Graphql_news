@@ -20,10 +20,14 @@ export const registerUser = createAsyncThunk("/register", async (userData) => {
         }`,
       },
     });
-    return {
-      ...(data.data ? data.data.signUp : null),
-      errors: data.errrors,
-    };
+
+    if (data.data) {
+      toastHandler("Welcome", "SUCCESS");
+      return data.data.SignUp;
+    } else if (data.errors) {
+      toastHandler(data.errors, "ERROR");
+      return data.errors;
+    }
   } catch (err) {
     console.log(err);
   }
@@ -46,13 +50,7 @@ export const registerSlice = createSlice({
       state.user = action.payload;
       state.message = "Registered succesfully!";
       localStorage.setItem("X-AUTH", state.user.token);
-      toastHandler("Welcome", "SUCCESS");
     },
-    // [registerUser.rejected]:(state, action) => {
-    //   state.isAuthenticated = false;
-    //   state.loading = false;
-
-    // }
   },
 });
 
