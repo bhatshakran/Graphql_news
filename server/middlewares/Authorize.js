@@ -18,7 +18,6 @@ const authorize = (req) => {
   try {
     //    Verify token
     const decoded = jwt.verify(token, process.env.JWT_SECRET);
-    console.log(decoded);
     req._id = decoded.id;
     return req;
   } catch (error) {
