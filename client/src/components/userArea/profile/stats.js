@@ -24,9 +24,11 @@ const Stats = (props) => {
                   <div>Sorry you dont have any categories</div>
                 ) : (
                   user.stats.stats.categories.map((item, idx) => {
-                    <Alert key={idx} variant="primary">
-                      {item.name}
-                    </Alert>;
+                    return (
+                      <Alert key={idx} variant="primary">
+                        {item.name}
+                      </Alert>
+                    );
                   })
                 )}
               </Card.Body>
@@ -34,6 +36,17 @@ const Stats = (props) => {
             <Card border="info">
               <Card.Body>
                 <Card.Title>Last created posts:</Card.Title>
+                {user.stats.stats.posts.length === 0 ? (
+                  <div>Sorry you dont have any posts</div>
+                ) : (
+                  user.stats.stats.posts.map((item, idx) => {
+                    return (
+                      <Alert key={idx} variant="primary">
+                        {item.title}
+                      </Alert>
+                    );
+                  })
+                )}
               </Card.Body>
             </Card>
           </CardGroup>
