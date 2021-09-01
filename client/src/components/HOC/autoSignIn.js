@@ -11,8 +11,7 @@ const AutoSignIn = (props) => {
   useEffect(() => {
     dispatch(autoSign());
     setLoading(false);
-    history.push("/user_area");
-  }, [dispatch]);
+  }, []);
 
   if (loading) {
     return (

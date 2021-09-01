@@ -177,8 +177,13 @@ export const loginSlice = createSlice({
     [getUserStats.fulfilled]: (state, action) => {
       state.isAuthenticated = true;
       state.loading = false;
-      state.stats = action.payload.stats;
+      state.stats = action.payload;
       state.message = "Fetched user stats!";
+    },
+    [getUserStats.pending]: (state, action) => {
+      state.isAuthenticated = false;
+      state.loading = true;
+      state.message = "Fetching...!";
     },
   },
 });
