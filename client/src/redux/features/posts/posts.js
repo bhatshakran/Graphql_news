@@ -1,4 +1,5 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
+import axios from "axios";
 import config from "../../../axios/config";
 import toastHandler from "../../../utils/toasts";
 
@@ -27,7 +28,6 @@ export const createPost = createAsyncThunk("/createpost", async (args) => {
 });
 
 export const getUserPosts = createAsyncThunk("/getposts", async (args) => {
-  console.log(args);
   try {
     const { sort, prevState, id } = args;
     const body = {
@@ -57,6 +57,46 @@ export const getUserPosts = createAsyncThunk("/getposts", async (args) => {
   }
 });
 
+export const updatePostStatus = createAsyncThunk(
+  "/updatestatus",
+  async (args) => {
+    try {
+      const { status, postId, prevState } = args;
+
+      const body = {
+        query: `mutation 
+        UpdatePost($fields:PostInput!, $postId:ID!){
+        updatePost(fields:$fields, postId:$postId){
+          _id
+          title
+          status
+          category{name}
+        }
+      }`,
+        variables: {
+          postId,
+          fields: { status },
+        },
+      };
+
+      const { data } = await config({ data: JSON.stringify(body) });
+
+      let newState = [];
+      let updPost = data.data ? data.data.updatePost : null;
+
+      prevState.map((post) => {
+        if (post._id !== updPost._id) {
+          newState.push(post);
+        }
+      });
+      newState.push(updPost);
+      return newState;
+    } catch (err) {
+      console.log(err);
+    }
+  }
+);
+
 export const postsSlice = createSlice({
   name: "posts",
   initialState: {
@@ -75,6 +115,11 @@ export const postsSlice = createSlice({
     [getUserPosts.fulfilled]: (state, action) => {
       state.loading = false;
       state.message = "Posts loaded!";
+      state.posts = action.payload;
+    },
+    [updatePostStatus.fulfilled]: (state, action) => {
+      state.loading = false;
+      state.message = "Post updated!";
       state.posts = action.payload;
     },
   },

@@ -2,7 +2,10 @@ import React, { useReducer, useEffect } from "react";
 import UserAreaHOC from "../../HOC/UserAreaHOC";
 import { Table, Button } from "react-bootstrap";
 import { useDispatch, useSelector } from "react-redux";
-import { getUserPosts } from "../../../redux/features/posts/posts";
+import {
+  getUserPosts,
+  updatePostStatus,
+} from "../../../redux/features/posts/posts";
 import { useHistory } from "react-router";
 
 const Articles = () => {
@@ -16,14 +19,25 @@ const Articles = () => {
   const posts = useSelector((state) => state.posts.posts);
   const dispatch = useDispatch();
 
-  useEffect(() => {
+  const userArgs = {
+    sort,
+    prevState: [],
+    id: user.user._id,
+  };
+  const updateStatusHandler = async (item) => {
+    const status = item.status === "DRAFT" ? "PUBLIC" : "DRAFT";
     const args = {
-      sort,
-      prevState: [],
-      id: user.user._id,
+      status,
+      postId: item._id,
+      prevState: posts,
     };
-    dispatch(getUserPosts(args));
-  }, []);
+    await dispatch(updatePostStatus(args));
+    dispatch(getUserPosts(userArgs));
+  };
+
+  useEffect(() => {
+    dispatch(getUserPosts(userArgs));
+  }, [dispatch]);
 
   return (
     <UserAreaHOC>
@@ -44,8 +58,13 @@ const Articles = () => {
                     <td>{i + 1}</td>
                     <td>{item.title}</td>
                     <td>{item.category.name}</td>
-
-                    <td>{item.status}</td>
+                    <td
+                      onClick={() => {
+                        updateStatusHandler(item);
+                      }}
+                    >
+                      {item.status}
+                    </td>
                     <td className="remove_btn">Remove</td>
                   </tr>
                 );
