@@ -6,6 +6,7 @@ import toastHandler from "../../../utils/toasts";
 import { useDispatch } from "react-redux";
 import { Form, Button, Alert } from "react-bootstrap";
 import { getCategories } from "../../../redux/features/stats/stats";
+import { createPost } from "../../../redux/features/posts/posts";
 
 const Create = () => {
   const [categories, setCategories] = useState(null);
@@ -34,7 +35,7 @@ const Create = () => {
       category: Yup.string().required("This field is required!"),
     }),
     onSubmit: (values) => {
-      console.log(values);
+      dispatch(createPost(values));
     },
   });
 
@@ -122,7 +123,7 @@ const Create = () => {
           ) : null}
         </Form.Group>
         <Form.Group>
-          <Form.Label>Category</Form.Label>
+          <Form.Label>Status</Form.Label>
           <Form.Control
             as="select"
             id="status"

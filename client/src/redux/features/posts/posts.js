@@ -1,7 +1,7 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import config from "../../../axios/config";
 
-export const createPost = createAsyncThunk("/categories", async (args) => {
+export const createPost = createAsyncThunk("/createpost", async (args) => {
   try {
     const body = {
       query: `mutation CreatePost($fields:PostInput!){
@@ -16,7 +16,7 @@ export const createPost = createAsyncThunk("/categories", async (args) => {
     };
 
     const { data } = await config({ data: JSON.stringify(body) });
-    console.log(data);
+
     return data.data.createPost;
   } catch (err) {
     console.log(err);
