@@ -51,8 +51,7 @@ export const getUserPosts = createAsyncThunk("/getposts", async (args) => {
     if (newPosts) {
       newState = [...prevState, ...newPosts];
     }
-
-    console.log(newState);
+    return newState;
   } catch (err) {
     console.log(err);
   }
@@ -72,6 +71,11 @@ export const postsSlice = createSlice({
       state.loading = false;
       state.message = "Post added to the DB!";
       state.post = action.payload;
+    },
+    [getUserPosts.fulfilled]: (state, action) => {
+      state.loading = false;
+      state.message = "Posts loaded!";
+      state.posts = action.payload;
     },
   },
 });

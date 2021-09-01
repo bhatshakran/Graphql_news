@@ -11,6 +11,7 @@ const Articles = () => {
   );
 
   const user = useSelector((state) => state.login);
+  const posts = useSelector((state) => state.posts.posts);
   const dispatch = useDispatch();
 
   useEffect(() => {
@@ -20,9 +21,25 @@ const Articles = () => {
       id: user.user._id,
     };
     dispatch(getUserPosts(args));
-  });
+  }, []);
 
-  return <UserAreaHOC>articles</UserAreaHOC>;
+  return (
+    <UserAreaHOC>
+      <Button
+        onClick={() => {
+          let skip = sort.skip + sort.limit;
+          let args = {
+            sort: { ...sort, skip: skip },
+            prevState: posts,
+            id: user.user._id,
+          };
+          dispatch(getUserPosts(args));
+        }}
+      >
+        Load More
+      </Button>
+    </UserAreaHOC>
+  );
 };
 
 export default Articles;
