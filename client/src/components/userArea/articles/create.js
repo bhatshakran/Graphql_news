@@ -5,8 +5,13 @@ import * as Yup from "yup";
 import toastHandler from "../../../utils/toasts";
 import { useDispatch } from "react-redux";
 import { Form, Button, Alert } from "react-bootstrap";
+import { getCategories } from "../../../redux/features/stats/stats";
 
 const Create = () => {
+  const [categories, setCategories] = useState(null);
+  const dispatch = useDispatch();
+
+  // formik
   const formik = useFormik({
     enableReinitialize: true,
     initialValues: {
@@ -32,6 +37,13 @@ const Create = () => {
       console.log(values);
     },
   });
+
+  useEffect(() => {
+    const func = async () => {
+      await dispatch(getCategories());
+    };
+    func();
+  }, []);
   return (
     <UserAreaHOC>
       <Form onSubmit={formik.handleSubmit}>

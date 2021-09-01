@@ -5,7 +5,7 @@ export const getCategories = createAsyncThunk("/categories", async () => {
   try {
     const body = {
       query: `query{
-                categories{
+                getCategories{
                     _id
                     name
                 }
@@ -14,7 +14,7 @@ export const getCategories = createAsyncThunk("/categories", async () => {
 
     const { data } = await config({ data: JSON.stringify(body) });
     console.log(data);
-    // return data;
+    return data.data.getCategories;
   } catch (err) {
     console.log(err);
   }
@@ -24,12 +24,17 @@ export const statsSlice = createSlice({
   name: "stats",
   initialState: {
     loading: true,
-    isAuthenticated: false,
     message: "",
     data: {},
   },
   reducers: {},
-  extraReducers: {},
+  extraReducers: {
+    [getCategories.fulfilled]: (state, action) => {
+      state.loading = false;
+      state.message = "Fetched categories";
+      state.data = action.payload;
+    },
+  },
 });
 
 export default statsSlice.reducer;
