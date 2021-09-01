@@ -10,6 +10,7 @@ const authorize = (req) => {
     token = req.headers.authorization.split(" ")[1];
   }
 
+  console.log(token);
   //Make sure token exists
   if (!token) {
     throw new AuthenticationError("Not authorized to access this route");

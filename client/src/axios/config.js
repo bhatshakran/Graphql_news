@@ -5,13 +5,12 @@ let instance = axios.create({
   method: "POST",
   headers: {
     "Content-Type": "application/json",
-   
+    Authorization: `Bearer ${localStorage.getItem("X-AUTH")}`,
   },
- 
-  
 });
-axios.defaults.headers.common["Authorization"] =
-"Bearer " + localStorage.getItem("X-AUTH");
+// axios.defaults.headers.common["Authorization"] = `Bearer ${localStorage.getItem(
+//   "X-AUTH"
+// )}`;
 
 
 export default instance

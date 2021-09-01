@@ -6,8 +6,13 @@ export const autoSign = createAsyncThunk("/autosignin", async () => {
   try {
     const { data } = await config({
       data: {
-        query: `
-        query{isAuth{_id, email, token}}
+        query: `query{
+          isAuth{
+            _id 
+            email
+            token
+          }
+          }
         `,
       },
     });
