@@ -26,6 +26,38 @@ export const createPost = createAsyncThunk("/createpost", async (args) => {
   }
 });
 
+export const getUserPosts = createAsyncThunk("/getposts", async (args) => {
+  console.log(args);
+  try {
+    const { sort, prevState, id } = args;
+    const body = {
+      query: `query GetUserPosts($sort:SortInput!, $queryBy:QueryByString){
+        getPosts(sort:$sort, queryBy:$queryBy) {
+          _id
+          title
+          status
+          category{name}
+        }
+      }`,
+      variables: {
+        queryBy: { key: "author", value: id },
+        sort: sort,
+      },
+    };
+
+    const { data } = await config({ data: JSON.stringify(body) });
+    let newState;
+    let newPosts = data.data ? data.data.getPosts : null;
+    if (newPosts) {
+      newState = [...prevState, ...newPosts];
+    }
+
+    console.log(newState);
+  } catch (err) {
+    console.log(err);
+  }
+});
+
 export const postsSlice = createSlice({
   name: "posts",
   initialState: {

@@ -34,8 +34,9 @@ const Create = () => {
         }),
       category: Yup.string().required("This field is required!"),
     }),
-    onSubmit: (values) => {
+    onSubmit: (values, { resetForm }) => {
       dispatch(createPost(values));
+      resetForm();
     },
   });
 
