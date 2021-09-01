@@ -40,10 +40,12 @@ const Create = () => {
 
   useEffect(() => {
     const func = async () => {
-      await dispatch(getCategories());
+      const response = await dispatch(getCategories());
+      setCategories(response.payload);
     };
     func();
-  }, []);
+  }, [setCategories]);
+
   return (
     <UserAreaHOC>
       <Form onSubmit={formik.handleSubmit}>
@@ -105,6 +107,15 @@ const Create = () => {
             value={formik.values.category}
           >
             <option value=""></option>
+            {categories
+              ? categories.map((item, i) => {
+                  return (
+                    <option key={i} value={item._id}>
+                      {item.name}
+                    </option>
+                  );
+                })
+              : null}
           </Form.Control>
           {formik.touched.category && formik.errors.category ? (
             <Alert variant="danger">{formik.errors.category}</Alert>
