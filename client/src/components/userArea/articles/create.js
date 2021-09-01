@@ -86,6 +86,22 @@ const Create = () => {
           <Form.Label>Category</Form.Label>
           <Form.Control
             as="select"
+            id="category"
+            name="category"
+            onChange={formik.handleChange}
+            onBlur={formik.handleBlur}
+            value={formik.values.category}
+          >
+            <option value=""></option>
+          </Form.Control>
+          {formik.touched.category && formik.errors.category ? (
+            <Alert variant="danger">{formik.errors.category}</Alert>
+          ) : null}
+        </Form.Group>
+        <Form.Group>
+          <Form.Label>Category</Form.Label>
+          <Form.Control
+            as="select"
             id="status"
             name="status"
             onChange={formik.handleChange}
@@ -100,6 +116,10 @@ const Create = () => {
             <Alert variant="danger">{formik.errors.status}</Alert>
           ) : null}
         </Form.Group>
+
+        <Button className="mt-3" variant="primary" type="submit">
+          Add Post
+        </Button>
       </Form>
     </UserAreaHOC>
   );
