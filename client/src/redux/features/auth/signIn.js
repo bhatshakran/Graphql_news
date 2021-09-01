@@ -85,6 +85,33 @@ export const loginUser = createAsyncThunk("/login", async (userData) => {
   }
 });
 
+export const getUserStats = createAsyncThunk("/getuserstats", async (id) => {
+  try {
+    const body = {
+      query: `query User($id:ID!){
+        getUser(id:$id){
+          name
+          lastname
+        }
+      }`,
+      variables: {
+        id: id,
+      },
+    };
+
+    const { data } = await config({
+      data: JSON.stringify(body),
+    });
+
+    console.log(data.data);
+    return {
+      stats: data.data ? data.data.getUser : null,
+    };
+  } catch (err) {
+    console.log(err);
+  }
+});
+
 export const loginSlice = createSlice({
   name: "auth",
   initialState: {
