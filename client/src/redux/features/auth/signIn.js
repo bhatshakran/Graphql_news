@@ -17,7 +17,7 @@ export const autoSign = createAsyncThunk("/autosignin", async () => {
       },
     });
     if (data.errors) localStorage.removeItem("X-AUTH");
-    console.log(data);
+
     return {
       ...(data.data ? data.data.isAuth : null),
     };
@@ -88,14 +88,26 @@ export const loginUser = createAsyncThunk("/login", async (userData) => {
 export const getUserStats = createAsyncThunk("/getuserstats", async (id) => {
   try {
     const body = {
-      query: `query User($id:ID!){
+      query: `query User($id:ID!, $sort: SortInput){
         getUser(id:$id){
           name
           lastname
+          posts(sort:$sort){
+            title
+            content
+          }
+          categories{
+            name
+          }
         }
       }`,
       variables: {
         id: id,
+        sort: {
+          sortBy: "_id",
+          order: "desc",
+          limit: 3,
+        },
       },
     };
 
@@ -103,7 +115,6 @@ export const getUserStats = createAsyncThunk("/getuserstats", async (id) => {
       data: JSON.stringify(body),
     });
 
-    console.log(data.data);
     return {
       stats: data.data ? data.data.getUser : null,
     };
@@ -119,6 +130,7 @@ export const loginSlice = createSlice({
     loading: true,
     isAuthenticated: false,
     message: "",
+    stats: {},
   },
   reducers: {
     logoutUser: (state) => {
@@ -155,13 +167,18 @@ export const loginSlice = createSlice({
       localStorage.setItem("X-AUTH", action.payload.token);
     },
     [updateUserEmailPass.fulfilled]: (state, action) => {
-      console.log("done");
       state.isAuthenticated = true;
       state.loading = false;
       state.user = action.payload;
       state.message = "Updated email/password!";
       localStorage.setItem("X-AUTH", action.payload.token);
       toastHandler("Updated email/password!", "SUCCESS");
+    },
+    [getUserStats.fulfilled]: (state, action) => {
+      state.isAuthenticated = true;
+      state.loading = false;
+      state.stats = action.payload.stats;
+      state.message = "Fetched user stats!";
     },
   },
 });
