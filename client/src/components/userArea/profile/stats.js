@@ -41,8 +41,8 @@ const Stats = (props) => {
                 ) : (
                   user.stats.stats.posts.map((item, idx) => {
                     return (
-                      <Alert key={idx} variant="primary">
-                        {item.title}
+                      <Alert key={idx} variant="info">
+                        -{item.title}
                       </Alert>
                     );
                   })
