@@ -3,6 +3,7 @@ import UserAreaHOC from "../../HOC/UserAreaHOC";
 import { Table, Button } from "react-bootstrap";
 import { useDispatch, useSelector } from "react-redux";
 import { getUserPosts } from "../../../redux/features/posts/posts";
+import { useHistory } from "react-router";
 
 const Articles = () => {
   const [sort, setSort] = useReducer(
@@ -10,6 +11,7 @@ const Articles = () => {
     { limit: 3, order: "desc", sortBy: "_id", skip: 0 }
   );
 
+  const history = useHistory();
   const user = useSelector((state) => state.login);
   const posts = useSelector((state) => state.posts.posts);
   const dispatch = useDispatch();
@@ -42,9 +44,9 @@ const Articles = () => {
                     <td>{i + 1}</td>
                     <td>{item.title}</td>
                     <td>{item.category.name}</td>
-                    <td className={item.status === "DRAFT" ? "yell" : "green"}>
-                      {item.status}
-                    </td>
+
+                    <td>{item.status}</td>
+                    <td className="remove_btn">Remove</td>
                   </tr>
                 );
               })
@@ -65,6 +67,16 @@ const Articles = () => {
         }}
       >
         Load More
+      </Button>
+
+      <Button
+        className="mx-2"
+        variant="outline-info"
+        onClick={() => {
+          history.push("/user_area/create");
+        }}
+      >
+        Create New Article
       </Button>
     </UserAreaHOC>
   );
