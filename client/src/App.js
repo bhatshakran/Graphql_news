@@ -11,6 +11,7 @@ import UserArea from "./components/userArea";
 import Profile from "./components/userArea/profile/index";
 import Create from "./components/userArea/articles/create";
 import Articles from "./components/userArea/articles/index";
+import Article from "./components/article";
 
 function App() {
   return (
@@ -26,6 +27,7 @@ function App() {
               <Route path="/user_area/profile" component={Protect(Profile)} />
               <Route path="/user_area/create" component={Protect(Create)} />
               <Route path="/user_area/articles" component={Protect(Articles)} />
+              <Route path="/article/:id" component={Article} />
               <Route exact path="/" component={Home} />
             </Switch>
           </Container>

@@ -156,6 +156,45 @@ export const deletePost = createAsyncThunk("/deletepost", async (args) => {
   }
 });
 
+export const getPost = createAsyncThunk("/getPost", async (id) => {
+  try {
+    const body = {
+      query: `
+      query {
+        getPost(id:"${id}"){
+          title
+          content
+          author{
+            name
+            lastname 
+          }
+
+          category {
+            _id
+            name
+          }
+
+          related(sort:{limit:4}){
+            _id
+            title
+            excerpt
+            author {
+              name
+              lastname
+            }
+          }
+        }
+      }`,
+    };
+
+    const { data } = await config({ data: JSON.stringify(body) });
+
+    console.log(data);
+  } catch (err) {
+    console.log(err);
+  }
+});
+
 export const postsSlice = createSlice({
   name: "posts",
   initialState: {
