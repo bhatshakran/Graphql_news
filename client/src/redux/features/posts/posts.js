@@ -98,6 +98,39 @@ export const updatePostStatus = createAsyncThunk(
   }
 );
 
+export const getAllPosts = createAsyncThunk("/getHomePosts", async (args) => {
+  const { sort, prevState } = args;
+
+  try {
+    const body = {
+      query: `query 
+      GetPosts ($sort:SortInput, $queryBy:QueryByString){
+        getPosts(sort:$sort, queryBy:$queryBy){
+          _id
+          title
+          status
+          excerpt
+         
+          author{
+            name
+            lastname
+          }
+        }
+      }`,
+
+      variables: {
+        queryBy: { key: "status", value: "PUBLIC" },
+        sort: sort,
+      },
+    };
+
+    const { data } = await config({ data: JSON.stringify(body) });
+
+    console.log(data);
+  } catch (err) {
+    console.log(err);
+  }
+});
 
 export const deletePost = createAsyncThunk("/deletepost", async (args) => {
   const { id, prevState } = args;
@@ -122,6 +155,8 @@ export const deletePost = createAsyncThunk("/deletepost", async (args) => {
     console.log(err);
   }
 });
+
+
 
 export const postsSlice = createSlice({
   name: "posts",
