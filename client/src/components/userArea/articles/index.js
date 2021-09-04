@@ -32,7 +32,6 @@ const Articles = () => {
       prevState: posts,
     };
     await dispatch(updatePostStatus(args));
-    dispatch(getUserPosts(userArgs));
   };
 
   useEffect(() => {

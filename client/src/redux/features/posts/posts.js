@@ -80,16 +80,17 @@ export const updatePostStatus = createAsyncThunk(
       };
 
       const { data } = await config({ data: JSON.stringify(body) });
+      
+
+      const updPost = data.data.updatePost;
 
       let newState = [];
-      let updPost = data.data ? data.data.updatePost : null;
+      let postUpdated = prevState.find((el) => el._id === updPost._id);
+      let prevIndex = prevState.indexOf(postUpdated);
+      newState = [...prevState];
+      newState.splice(prevIndex, 1);
+      newState.splice(prevIndex, 0, updPost);
 
-      prevState.map((post) => {
-        if (post._id !== updPost._id) {
-          newState.push(post);
-        }
-      });
-      newState.push(updPost);
       return newState;
     } catch (err) {
       console.log(err);
