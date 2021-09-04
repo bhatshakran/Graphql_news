@@ -24,7 +24,11 @@ const Home = () => {
 
   return (
     <Fragment>
-      <Masonry>
+      <Masonry
+        breakpointCols={3}
+        className="my-masonry-grid"
+        columnClassName="my-masonry-grid-column"
+      >
         {posts
           ? posts.map((post, index) => {
               return <CardItem item={post} key={index} />;
