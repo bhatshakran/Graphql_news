@@ -12,7 +12,7 @@ const Article = (props) => {
     if (props.match.params.id) {
       dispatch(getPost(props.match.params.id));
     }
-  }, []);
+  }, [dispatch]);
 
   return <div>article here</div>;
 };

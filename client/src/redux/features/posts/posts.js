@@ -189,7 +189,7 @@ export const getPost = createAsyncThunk("/getPost", async (id) => {
 
     const { data } = await config({ data: JSON.stringify(body) });
 
-    console.log(data);
+    return data.data.getPost;
   } catch (err) {
     console.log(err);
   }
@@ -230,6 +230,11 @@ export const postsSlice = createSlice({
       state.loading = false;
       state.message = "Fetched all Home Posts";
       state.allPosts = action.payload;
+    },
+    [getPost.fulfilled]: (state, action) => {
+      state.loading = false;
+      state.message = "Article Fetched!";
+      state.post = action.payload;
     },
   },
 });
