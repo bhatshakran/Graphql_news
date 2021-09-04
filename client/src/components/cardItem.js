@@ -5,13 +5,13 @@ import { LinkContainer } from "react-router-bootstrap";
 const CardItem = (props) => {
   return (
     <Fragment>
-      <Card>
+      <Card className="m-3">
         <Card.Body>
-          <Link.Container to={`article/${props.item._id}`}>
+          <LinkContainer to={`article/${props.item._id}`}>
             <Card.Link>
               <Card.Title>{props.item.title}</Card.Title>
             </Card.Link>
-          </Link.Container>
+          </LinkContainer>
           <Card.Text>{props.item.excerpt}</Card.Text>
         </Card.Body>
         <Card.Footer>
