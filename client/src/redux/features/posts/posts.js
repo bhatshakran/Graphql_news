@@ -126,7 +126,7 @@ export const getAllPosts = createAsyncThunk("/getHomePosts", async (args) => {
 
     const { data } = await config({ data: JSON.stringify(body) });
 
-    console.log(data);
+    return data.data.getPosts;
   } catch (err) {
     console.log(err);
   }
@@ -156,15 +156,14 @@ export const deletePost = createAsyncThunk("/deletepost", async (args) => {
   }
 });
 
-
-
 export const postsSlice = createSlice({
   name: "posts",
   initialState: {
     loading: true,
     message: "",
-    posts: [],
+    userPosts: [],
     post: {},
+    allPosts: [],
   },
   reducers: {},
   extraReducers: {
@@ -176,7 +175,7 @@ export const postsSlice = createSlice({
     [getUserPosts.fulfilled]: (state, action) => {
       state.loading = false;
       state.message = "Posts loaded!";
-      state.posts = action.payload;
+      state.userPosts = action.payload;
     },
     [updatePostStatus.fulfilled]: (state, action) => {
       state.loading = false;
@@ -187,6 +186,11 @@ export const postsSlice = createSlice({
       state.loading = false;
       state.message = action.payload.returnMessage;
       state.posts = action.payload.newState;
+    },
+    [getAllPosts.fulfilled]: (state, action) => {
+      state.loading = false;
+      state.message = "Fetched all Home Posts";
+      state.allPosts = action.payload;
     },
   },
 });

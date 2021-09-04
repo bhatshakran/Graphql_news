@@ -19,7 +19,7 @@ const Home = () => {
       prevState: [],
     };
     dispatch(getAllPosts(args));
-  });
+  }, []);
 
   return <div></div>;
 };

@@ -17,7 +17,7 @@ const Articles = () => {
 
   const history = useHistory();
   const user = useSelector((state) => state.login);
-  const posts = useSelector((state) => state.posts.posts);
+  const posts = useSelector((state) => state.posts.userPosts);
   const dispatch = useDispatch();
 
   const userArgs = {
