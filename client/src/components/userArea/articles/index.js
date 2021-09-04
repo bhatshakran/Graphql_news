@@ -3,6 +3,7 @@ import UserAreaHOC from "../../HOC/UserAreaHOC";
 import { Table, Button } from "react-bootstrap";
 import { useDispatch, useSelector } from "react-redux";
 import {
+  deletePost,
   getUserPosts,
   updatePostStatus,
 } from "../../../redux/features/posts/posts";
@@ -32,6 +33,14 @@ const Articles = () => {
       prevState: posts,
     };
     await dispatch(updatePostStatus(args));
+  };
+
+  const deletePostHandler = async (item) => {
+    const args = {
+      id: item._id,
+      prevState: posts,
+    };
+    await dispatch(deletePost(args));
   };
 
   useEffect(() => {
@@ -64,7 +73,14 @@ const Articles = () => {
                     >
                       {item.status}
                     </td>
-                    <td className="remove_btn">Remove</td>
+                    <td
+                      className="remove_btn"
+                      onClick={() => {
+                        deletePostHandler(item);
+                      }}
+                    >
+                      Remove
+                    </td>
                   </tr>
                 );
               })

@@ -98,6 +98,31 @@ export const updatePostStatus = createAsyncThunk(
   }
 );
 
+
+export const deletePost = createAsyncThunk("/deletepost", async (args) => {
+  const { id, prevState } = args;
+  try {
+    const body = {
+      query: `mutation{
+        deletePost(id:"${id}")
+      }`,
+    };
+
+    const { data } = await config({ data: JSON.stringify(body) });
+    const returnMessage = data.data.deletePost;
+
+    let newState = [...prevState];
+
+    const prevIndex = prevState.indexOf(prevState.find((el) => el._id === id));
+    newState.splice(prevIndex, 1);
+
+    console.log(newState);
+    return { newState, returnMessage };
+  } catch (err) {
+    console.log(err);
+  }
+});
+
 export const postsSlice = createSlice({
   name: "posts",
   initialState: {
@@ -122,6 +147,11 @@ export const postsSlice = createSlice({
       state.loading = false;
       state.message = "Post updated!";
       state.posts = action.payload;
+    },
+    [deletePost.fulfilled]: (state, action) => {
+      state.loading = false;
+      state.message = action.payload.returnMessage;
+      state.posts = action.payload.newState;
     },
   },
 });
