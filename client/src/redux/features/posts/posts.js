@@ -182,6 +182,10 @@ export const getPost = createAsyncThunk("/getPost", async (id) => {
               name
               lastname
             }
+            category {
+              _id
+              name
+            }
           }
         }
       }`,

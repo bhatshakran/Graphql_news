@@ -1,6 +1,6 @@
 import React, { Fragment, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import CardItem from "react-bootstrap";
+import CardItem from "./cardItem";
 import { CardGroup } from "react-bootstrap";
 import { getPost } from "../redux/features/posts/posts";
 
@@ -25,6 +25,15 @@ const Article = (props) => {
           </small>
           <hr />
           <div>{post.content}</div>
+          <hr />
+          <h3>Related Posts</h3>
+          <CardGroup>
+            {post.related
+              ? post.related.map((item, index) => {
+                  return <CardItem item={item} key={index} />;
+                })
+              : null}
+          </CardGroup>
         </Fragment>
       ) : null}
     </Fragment>
