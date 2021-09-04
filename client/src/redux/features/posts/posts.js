@@ -84,13 +84,13 @@ export const updatePostStatus = createAsyncThunk(
 
       const updPost = data.data.updatePost;
 
-      let newState = [];
-      let postUpdated = prevState.find((el) => el._id === updPost._id);
-      let prevIndex = prevState.indexOf(postUpdated);
-      newState = [...prevState];
+      let newState = [...prevState];
+      let prevIndex = prevState.indexOf(
+        prevState.find((el) => el._id === updPost._id)
+      );
       newState.splice(prevIndex, 1);
       newState.splice(prevIndex, 0, updPost);
-
+      toastHandler("Updated post status!", "SUCCESS");
       return newState;
     } catch (err) {
       console.log(err);
